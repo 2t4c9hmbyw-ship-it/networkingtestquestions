@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CompTIA Network+ N10-009 Practice Quiz</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #dbe4ee;
+      --accent: #0f172a;
+      --accent-2: #2563eb;
+      --good: #16a34a;
+      --bad: #dc2626;
+      --soft: #eef2ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin-top: 0; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); margin-bottom: 0; }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .metric-label { color: var(--muted); font-size: 0.95rem; }
+    .metric-value { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
+
+    .progress-wrap {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-2);
+      transition: width 0.25s ease;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .info-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.05s ease, opacity 0.2s ease;
+    }
+
+    button:hover { opacity: 0.95; }
+    button:active { transform: translateY(1px); }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .secondary-btn {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .question-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .question-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .question-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin: 6px 0 0;
+    }
+
+    .status {
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #fff;
+      white-space: nowrap;
+      display: none;
+      font-size: 0.88rem;
+    }
+
+    .status.correct { background: var(--good); }
+    .status.incorrect { background: var(--bad); }
+
+    .option {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fff;
+    }
+
+    .option input { margin-top: 4px; }
+    .option.selected { background: #f1f5f9; border-color: var(--accent); }
+
+    .explanation {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .explanation strong { display: block; margin-bottom: 6px; }
+
+    .select-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.96rem;
+    }
+
+    .results {
+      background: #0f172a;
+      color: white;
+      border-radius: 20px;
+      padding: 24px;
+      display: none;
+      margin-top: 16px;
+    }
+
+    .results h2 { margin-bottom: 8px; }
+    .results p { margin-top: 4px; color: #cbd5e1; }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 800px) {
+      .top-grid,
+      .select-row {
+        grid-template-columns: 1fr;
+      }
+
+      .question-top {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>CompTIA Network+ N10-009 Practice Quiz</h1>
+      <p class="subtitle">Focused on Professor Messer topics you finished: Understanding the Intro, OSI Model, Networking Devices, and Networking Functions.</p>
+
+      <div class="top-grid">
+        <div class="metric">
+          <div class="metric-label">Answered</div>
+          <div class="metric-value"><span id="answeredCount">0</span> / 33</div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Progress</span><span id="progressPercent">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge">33 Questions</span>
+        <span class="badge">Mixed Difficulty</span>
+        <span class="badge">Single Answer + Select All + Matching + Ordering</span>
+      </div>
+
+      <div class="info-box">
+        Select your answers, then click <strong>Submit Quiz</strong>. You will get an instant score, correct and incorrect markers, and explanations for review.
+      </div>
+
+      <div class="button-row">
+        <button class="primary-btn" onclick="submitQuiz()">Submit Quiz</button>
+        <button class="secondary-btn" onclick="resetQuiz()">Reset Quiz</button>
+      </div>
+
+      <div class="results" id="resultsBox">
+        <h2 id="scoreLine">Quiz Score</h2>
+        <p id="scoreMessage"></p>
+      </div>
+    </div>
+
+    <div id="quizContainer"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { id: 1, type: 'single', topic: 'Understanding the Intro / OSI Model', difficulty: 'Easy', prompt: 'Which statement best describes the purpose of the OSI model?', options: { A: 'It assigns IP addresses to endpoints', B: 'It provides a standard way to describe how network communication happens', C: 'It encrypts traffic between two sites', D: 'It replaces TCP/IP on modern networks' }, answer: 'B', explanation: 'The OSI model is a conceptual framework used to describe how network communication works across layers.' },
+      { id: 2, type: 'single', topic: 'OSI Model', difficulty: 'Easy', prompt: 'A web browser sends a request to a web server. At which OSI layer would HTTP be categorized?', options: { A: 'Physical', B: 'Network', C: 'Transport', D: 'Application' }, answer: 'D', explanation: 'HTTP is an Application layer protocol.' },
+      { id: 3, type: 'single', topic: 'Networking Devices', difficulty: 'Easy', prompt: 'Which device primarily makes forwarding decisions based on MAC addresses?', options: { A: 'Router', B: 'Switch', C: 'Firewall', D: 'Load balancer' }, answer: 'B', explanation: 'A switch forwards frames in a LAN based on MAC addresses.' },
+      { id: 4, type: 'single', topic: 'Networking Devices', difficulty: 'Easy', prompt: 'Which device is primarily used to connect different IP networks together?', options: { A: 'Access point', B: 'Switch', C: 'Router', D: 'Patch panel' }, answer: 'C', explanation: 'Routers connect different IP networks and make forwarding decisions using Layer 3 information.' },
+      { id: 5, type: 'single', topic: 'OSI Model', difficulty: 'Easy', prompt: 'Which OSI layer is most associated with IP addressing and routing?', options: { A: 'Data Link', B: 'Network', C: 'Session', D: 'Presentation' }, answer: 'B', explanation: 'The Network layer handles logical addressing and routing.' },
+      { id: 6, type: 'single', topic: 'Networking Devices', difficulty: 'Easy', prompt: 'A user plugs into the office wireless network through a device that bridges wireless clients to the wired LAN. What device is this?', options: { A: 'Firewall', B: 'Access point', C: 'IDS', D: 'Media converter' }, answer: 'B', explanation: 'An access point connects wireless devices to the wired network.' },
+      { id: 7, type: 'single', topic: 'Networking Functions', difficulty: 'Easy', prompt: 'Which network function translates one private IP address space into a public IP address or addresses?', options: { A: 'VLAN tagging', B: 'NAT', C: 'QoS', D: 'Port mirroring' }, answer: 'B', explanation: 'NAT translates between private and public addressing.' },
+      { id: 8, type: 'single', topic: 'Networking Devices / Functions', difficulty: 'Easy', prompt: 'Which device would most commonly be placed at the network edge to allow or block traffic based on rules?', options: { A: 'Firewall', B: 'Hub', C: 'Repeater', D: 'Transceiver' }, answer: 'A', explanation: 'A firewall filters traffic based on defined security policies.' },
+      { id: 9, type: 'single', topic: 'OSI Model', difficulty: 'Easy', prompt: 'Which OSI layer is responsible for frames?', options: { A: 'Physical', B: 'Data Link', C: 'Network', D: 'Transport' }, answer: 'B', explanation: 'Frames are the Layer 2 data unit at the Data Link layer.' },
+      { id: 10, type: 'single', topic: 'Understanding the Intro', difficulty: 'Easy', prompt: 'Which of the following best describes a protocol?', options: { A: 'A cable standard used in structured cabling', B: 'A set of rules for communication between systems', C: 'A type of network topology', D: 'A wireless frequency band' }, answer: 'B', explanation: 'Protocols define the rules used for communication.' },
+      { id: 11, type: 'single', topic: 'Networking Functions', difficulty: 'Medium', prompt: 'A user can ping a server by IP address but cannot open it by hostname. Which function is most likely failing?', options: { A: 'DHCP', B: 'DNS', C: 'NAT', D: 'STP' }, answer: 'B', explanation: 'If IP works but names do not, DNS is the likely issue.' },
+      { id: 12, type: 'single', topic: 'Networking Devices', difficulty: 'Medium', prompt: 'Which device is designed to distribute requests across multiple servers?', options: { A: 'Load balancer', B: 'Router', C: 'Switch', D: 'Proxy' }, answer: 'A', explanation: 'Load balancers distribute client requests across multiple backend servers.' },
+      { id: 13, type: 'multi', choose: 2, topic: 'OSI Model', difficulty: 'Medium', prompt: 'Which two items are most closely associated with the Transport layer?', options: { A: 'TCP', B: 'UDP', C: 'Ethernet', D: 'IP', E: 'SMTP' }, answer: ['A', 'B'], explanation: 'TCP and UDP are Transport layer protocols.' },
+      { id: 14, type: 'multi', choose: 2, topic: 'Networking Devices / OSI Model', difficulty: 'Medium', prompt: 'Which two devices commonly operate at Layer 3 of the OSI model?', options: { A: 'Router', B: 'Multilayer switch', C: 'Patch panel', D: 'Hub', E: 'Repeater' }, answer: ['A', 'B'], explanation: 'Routers and multilayer switches can operate at Layer 3.' },
+      { id: 15, type: 'multi', choose: 3, topic: 'Networking Devices / Functions', difficulty: 'Medium', prompt: 'Which three are common network appliances or security-focused networking devices/functions?', options: { A: 'Firewall', B: 'IDS/IPS', C: 'Load balancer', D: 'Keystone jack', E: 'Punchdown block' }, answer: ['A', 'B', 'C'], explanation: 'Firewall, IDS/IPS, and load balancer are networking/security appliances. Keystone jacks and punchdown blocks are cabling components.' },
+      { id: 16, type: 'multi', choose: 2, topic: 'Networking Devices', difficulty: 'Medium', prompt: 'Which two statements about a switch are true?', options: { A: 'It usually forwards traffic based on MAC addresses', B: 'It is primarily responsible for DNS resolution', C: 'It can reduce unnecessary traffic compared to a hub', D: 'It performs NAT by default in basic LAN deployments', E: 'It always replaces the need for a router' }, answer: ['A', 'C'], explanation: 'A switch forwards by MAC address and is more efficient than a hub.' },
+      { id: 17, type: 'multi', choose: 2, topic: 'Networking Functions', difficulty: 'Medium', prompt: 'Which two functions are commonly used to improve availability or traffic handling on a network?', options: { A: 'Load balancing', B: 'QoS', C: 'ARP poisoning', D: 'Loopback addressing', E: 'EMI' }, answer: ['A', 'B'], explanation: 'Load balancing helps distribute traffic, and QoS prioritizes important traffic during congestion.' },
+      { id: 18, type: 'multi', choose: 3, topic: 'OSI Model', difficulty: 'Medium', prompt: 'Which three items would you most likely associate with the Data Link layer?', options: { A: 'MAC address', B: 'Frame', C: 'Switching', D: 'Routing', E: 'Segment', F: 'Ethernet' }, answer: ['A', 'B', 'F'], explanation: 'MAC addresses, frames, and Ethernet are classic Layer 2 concepts.' },
+      { id: 19, type: 'single', topic: 'Networking Devices', difficulty: 'Medium', prompt: 'A company wants employees on Wi-Fi to access the internal LAN without using cables, while still connecting through the existing wired network. Which device should they deploy?', options: { A: 'Router', B: 'Firewall', C: 'Access point', D: 'Media converter' }, answer: 'C', explanation: 'Access points bridge wireless users to the wired LAN.' },
+      { id: 20, type: 'single', topic: 'Networking Functions', difficulty: 'Medium', prompt: 'A small office has one public IP from the ISP, but many internal devices need internet access at the same time. Which technology makes this possible?', options: { A: 'STP', B: 'NAT/PAT', C: 'VLAN trunking', D: 'PoE' }, answer: 'B', explanation: 'PAT allows many internal devices to share one public IP.' },
+      { id: 21, type: 'single', topic: 'OSI Model', difficulty: 'Medium', prompt: 'You are troubleshooting and notice that a cable is damaged. Which OSI layer is this most directly tied to?', options: { A: 'Physical', B: 'Transport', C: 'Session', D: 'Application' }, answer: 'A', explanation: 'Cables are part of the Physical layer.' },
+      { id: 22, type: 'single', topic: 'Networking Functions', difficulty: 'Medium', prompt: 'A network admin wants to separate voice traffic from data traffic and prioritize the voice traffic so calls sound better during congestion. Which concept best fits this?', options: { A: 'NAT', B: 'QoS', C: 'DNS', D: 'ACL logging' }, answer: 'B', explanation: 'QoS is used to prioritize latency-sensitive traffic such as voice.' },
+      { id: 23, type: 'single', topic: 'Networking Devices / Functions', difficulty: 'Medium', prompt: 'A host sends traffic to a destination on another network. Which device usually acts as the default gateway?', options: { A: 'Switch', B: 'Access point', C: 'Router', D: 'Proxy server' }, answer: 'C', explanation: 'The default gateway is usually a router or Layer 3 device.' },
+      { id: 24, type: 'single', topic: 'Networking Functions', difficulty: 'Easy', prompt: 'Which network function is specifically meant to convert a human-friendly name like server1.company.com into an IP address?', options: { A: 'DHCP', B: 'SNMP', C: 'DNS', D: 'NTP' }, answer: 'C', explanation: 'DNS resolves names to IP addresses.' },
+      { id: 25, type: 'single', topic: 'Networking Devices', difficulty: 'Medium', prompt: 'Which statement best compares a hub and a switch?', options: { A: 'A hub makes forwarding decisions using MAC addresses, while a switch floods all traffic', B: 'A switch is generally more efficient because it can send traffic only where needed', C: 'A hub performs routing, while a switch performs NAT', D: 'A switch only works in wireless networks' }, answer: 'B', explanation: 'A switch forwards traffic more intelligently than a hub.' },
+      { id: 26, type: 'single', topic: 'Networking Devices / Functions', difficulty: 'Medium', prompt: 'An administrator wants to inspect suspicious inbound traffic and stop known malicious patterns automatically. Which device or function is the best fit?', options: { A: 'Access point', B: 'IDS/IPS', C: 'Patch panel', D: 'DNS server' }, answer: 'B', explanation: 'An IPS can inspect and actively block known malicious traffic patterns.' },
+      { id: 27, type: 'single', topic: 'Networking Functions / Troubleshooting', difficulty: 'Hard', prompt: "A user says, 'My internet is down.' You discover their PC has a valid IP address, can reach the default gateway, and can ping 8.8.8.8, but cannot browse to websites by name. What is the most likely issue?", options: { A: 'Faulty switch port', B: 'DNS problem', C: 'NAT failure at the edge router', D: 'Transport layer mismatch' }, answer: 'B', explanation: 'Internet connectivity by IP works, but hostname resolution does not, which points to DNS.' },
+      { id: 28, type: 'single', topic: 'OSI Model', difficulty: 'Hard', prompt: 'Which of the following best shows the correct flow of data units from upper-level user communication down toward the wire?', options: { A: 'Packets → frames → bits', B: 'Frames → packets → bits', C: 'Segments → packets → frames → bits', D: 'Bits → frames → packets → segments' }, answer: 'C', explanation: 'The classic progression downward is segments (transport), packets (network), frames (data link), and bits (physical).' },
+      { id: 29, type: 'single', topic: 'Networking Devices / Security', difficulty: 'Hard', prompt: 'A company wants to protect internal servers by placing a security device between the internet and the LAN that filters traffic by policy. Which answer is best?', options: { A: 'Switch', B: 'Firewall', C: 'Repeater', D: 'Transceiver' }, answer: 'B', explanation: 'A firewall filters traffic according to policy between networks.' },
+      { id: 30, type: 'single', topic: 'OSI Model', difficulty: 'Easy', prompt: 'Which layer is most concerned with the actual transmission of electrical, radio, or light signals?', options: { A: 'Physical', B: 'Data Link', C: 'Network', D: 'Presentation' }, answer: 'A', explanation: 'The Physical layer deals with signal transmission on the medium.' },
+      { id: 31, type: 'matching', topic: 'Networking Devices', difficulty: 'Hard', prompt: 'Match the device to its best primary role.', leftItems: ['Router', 'Switch', 'Access point', 'Firewall', 'Load balancer'], rightOptions: ['Filters traffic based on security rules', 'Connects wireless clients to the network', 'Connects different IP networks', 'Distributes traffic across multiple servers', 'Forwards traffic inside a LAN using MAC addresses'], answer: { 'Router': 'Connects different IP networks', 'Switch': 'Forwards traffic inside a LAN using MAC addresses', 'Access point': 'Connects wireless clients to the network', 'Firewall': 'Filters traffic based on security rules', 'Load balancer': 'Distributes traffic across multiple servers' }, explanation: 'These are the standard primary roles for each device.' },
+      { id: 32, type: 'ordering', topic: 'OSI Model', difficulty: 'Hard', prompt: 'Put these OSI layers in order from highest to lowest.', optionsList: ['Application', 'Presentation', 'Session', 'Transport', 'Network', 'Data Link', 'Physical'], answer: ['Application', 'Presentation', 'Session', 'Transport', 'Network', 'Data Link', 'Physical'], explanation: 'The OSI model from Layer 7 to Layer 1 is Application, Presentation, Session, Transport, Network, Data Link, Physical.' },
+      { id: 33, type: 'mapping', topic: 'OSI Model', difficulty: 'Hard', prompt: 'For each item below, choose the best OSI layer.', items: ['IP', 'Ethernet frame', 'TCP', 'Fiber optic cable', 'HTTP', 'MAC address'], optionsList: ['Application', 'Presentation', 'Session', 'Transport', 'Network', 'Data Link', 'Physical'], answer: { 'IP': 'Network', 'Ethernet frame': 'Data Link', 'TCP': 'Transport', 'Fiber optic cable': 'Physical', 'HTTP': 'Application', 'MAC address': 'Data Link' }, explanation: 'These are classic mappings between common technologies and OSI layers.' }
+    ];
+
+    const answers = {};
+
+    function initializeAnswers() {
+      questions.forEach(q => {
+        if (q.type === 'single') answers[q.id] = '';
+        if (q.type === 'multi') answers[q.id] = [];
+        if (q.type === 'matching') {
+          answers[q.id] = {};
+          q.leftItems.forEach(item => answers[q.id][item] = '');
+        }
+        if (q.type === 'ordering') answers[q.id] = Array(q.answer.length).fill('');
+        if (q.type === 'mapping') {
+          answers[q.id] = {};
+          q.items.forEach(item => answers[q.id][item] = '');
+        }
+      });
+    }
+
+    function arraysEqual(a, b) {
+      if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+      const aa = [...a].sort();
+      const bb = [...b].sort();
+      return aa.every((v, i) => v === bb[i]);
+    }
+
+    function isAnswered(q) {
+      const ua = answers[q.id];
+      if (q.type === 'single') return !!ua;
+      if (q.type === 'multi') return ua.length > 0;
+      if (q.type === 'matching') return q.leftItems.every(item => answers[q.id][item]);
+      if (q.type === 'ordering') return ua.every(Boolean);
+      if (q.type === 'mapping') return q.items.every(item => answers[q.id][item]);
+      return false;
+    }
+
+    function isCorrect(q) {
+      const ua = answers[q.id];
+      if (q.type === 'single') return ua === q.answer;
+      if (q.type === 'multi') return arraysEqual(ua, q.answer);
+      if (q.type === 'matching') return q.leftItems.every(item => ua[item] === q.answer[item]);
+      if (q.type === 'ordering') return ua.every((value, index) => value === q.answer[index]);
+      if (q.type === 'mapping') return q.items.every(item => ua[item] === q.answer[item]);
+      return false;
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+
+      questions.forEach(q => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `question-${q.id}`;
+
+        const top = document.createElement('div');
+        top.className = 'question-top';
+
+        const left = document.createElement('div');
+        left.innerHTML = `
+          <div class="badge-row">
+            <span class="badge">Question ${q.id}</span>
+            <span class="badge">${q.topic}</span>
+            <span class="badge">${q.difficulty}</span>
+            ${q.type === 'multi' ? `<span class="badge">Choose ${q.choose}</span>` : ''}
+          </div>
+          <div class="question-title">${q.prompt}</div>
+        `;
+
+        const status = document.createElement('div');
+        status.className = 'status';
+        status.id = `status-${q.id}`;
+
+        top.appendChild(left);
+        top.appendChild(status);
+        card.appendChild(top);
+
+        if (q.type === 'single' || q.type === 'multi') {
+          Object.entries(q.options).forEach(([key, value]) => {
+            const label = document.createElement('label');
+            label.className = 'option';
+            label.id = `option-${q.id}-${key}`;
+
+            const input = document.createElement('input');
+            input.type = q.type === 'single' ? 'radio' : 'checkbox';
+            input.name = `question-${q.id}`;
+            input.value = key;
+            input.addEventListener('change', () => {
+              if (q.type === 'single') {
+                answers[q.id] = key;
+              } else {
+                const current = answers[q.id];
+                if (current.includes(key)) {
+                  answers[q.id] = current.filter(v => v !== key);
+                } else if (current.length < q.choose) {
+                  answers[q.id].push(key);
+                } else {
+                  input.checked = false;
+                }
+              }
+              refreshSelectionStyles(q);
+              updateProgress();
+            });
+
+            const text = document.createElement('div');
+            text.innerHTML = `<strong>${key}.</strong> ${value}`;
+
+            label.appendChild(input);
+            label.appendChild(text);
+            card.appendChild(label);
+          });
+        }
+
+        if (q.type === 'matching') {
+          q.leftItems.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'select-row';
+            row.innerHTML = `<div><strong>${item}</strong></div>`;
+
+            const select = document.createElement('select');
+            select.innerHTML = `<option value="">Select role</option>` + q.rightOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            select.addEventListener('change', e => {
+              answers[q.id][item] = e.target.value;
+              updateProgress();
+            });
+            row.appendChild(select);
+            card.appendChild(row);
+          });
+        }
+
+        if (q.type === 'ordering') {
+          q.answer.forEach((_, index) => {
+            const row = document.createElement('div');
+            row.className = 'select-row';
+            row.innerHTML = `<div><strong>Position ${index + 1}</strong></div>`;
+
+            const select = document.createElement('select');
+            select.innerHTML = `<option value="">Select layer</option>` + q.optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            select.addEventListener('change', e => {
+              answers[q.id][index] = e.target.value;
+              updateProgress();
+            });
+            row.appendChild(select);
+            card.appendChild(row);
+          });
+
+          const note = document.createElement('div');
+          note.className = 'small-note';
+          note.textContent = 'Highest layer should be Position 1. Lowest layer should be Position 7.';
+          card.appendChild(note);
+        }
+
+        if (q.type === 'mapping') {
+          q.items.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'select-row';
+            row.innerHTML = `<div><strong>${item}</strong></div>`;
+
+            const select = document.createElement('select');
+            select.innerHTML = `<option value="">Select OSI layer</option>` + q.optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+            select.addEventListener('change', e => {
+              answers[q.id][item] = e.target.value;
+              updateProgress();
+            });
+            row.appendChild(select);
+            card.appendChild(row);
+          });
+        }
+
+        const explanation = document.createElement('div');
+        explanation.className = 'explanation';
+        explanation.id = `explanation-${q.id}`;
+        card.appendChild(explanation);
+
+        container.appendChild(card);
+      });
+    }
+
+    function refreshSelectionStyles(q) {
+      if (q.type !== 'single' && q.type !== 'multi') return;
+      Object.keys(q.options).forEach(key => {
+        const optionEl = document.getElementById(`option-${q.id}-${key}`);
+        const selected = q.type === 'single' ? answers[q.id] === key : answers[q.id].includes(key);
+        optionEl.classList.toggle('selected', selected);
+      });
+    }
+
+    function updateProgress() {
+      const answered = questions.filter(isAnswered).length;
+      const percent = Math.round((answered / questions.length) * 100);
+      document.getElementById('answeredCount').textContent = answered;
+      document.getElementById('progressPercent').textContent = `${percent}%`;
+      document.getElementById('progressFill').style.width = `${percent}%`;
+    }
+
+    function getCorrectAnswerText(q) {
+      if (q.type === 'single') return `${q.answer}. ${q.options[q.answer]}`;
+      if (q.type === 'multi') return q.answer.map(a => `${a}. ${q.options[a]}`).join(' | ');
+      if (q.type === 'matching') return q.leftItems.map(item => `${item} → ${q.answer[item]}`).join('<br>');
+      if (q.type === 'ordering') return q.answer.join(' → ');
+      if (q.type === 'mapping') return q.items.map(item => `${item} → ${q.answer[item]}`).join('<br>');
+      return '';
+    }
+
+    function submitQuiz() {
+      let correctCount = 0;
+
+      questions.forEach(q => {
+        const correct = isCorrect(q);
+        if (correct) correctCount++;
+
+        const status = document.getElementById(`status-${q.id}`);
+        status.style.display = 'inline-block';
+        status.className = `status ${correct ? 'correct' : 'incorrect'}`;
+        status.textContent = correct ? 'Correct' : 'Incorrect';
+
+        const explanation = document.getElementById(`explanation-${q.id}`);
+        explanation.style.display = 'block';
+        explanation.innerHTML = `
+          <strong>Explanation</strong>
+          <div>${q.explanation}</div>
+          ${!correct ? `<div style="margin-top:10px;"><strong>Correct answer:</strong><br>${getCorrectAnswerText(q)}</div>` : ''}
+        `;
+      });
+
+      const percent = Math.round((correctCount / questions.length) * 100);
+      let message = '';
+      if (correctCount >= 27) message = 'Strong start. You understood these videos well.';
+      else if (correctCount >= 21) message = 'Good job. Review your weak spots before moving on.';
+      else if (correctCount >= 15) message = 'Decent exposure, but another pass on the core ideas would help.';
+      else message = 'You should rewatch these topics and tighten up the fundamentals.';
+
+      const resultsBox = document.getElementById('resultsBox');
+      document.getElementById('scoreLine').textContent = `Quiz Score: ${correctCount}/33 (${percent}%)`;
+      document.getElementById('scoreMessage').textContent = message;
+      resultsBox.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+      initializeAnswers();
+      renderQuiz();
+      updateProgress();
+      document.getElementById('resultsBox').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    initializeAnswers();
+    renderQuiz();
+    updateProgress();
+  </script>
+</body>
+</html>
